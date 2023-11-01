@@ -5,7 +5,7 @@ import { CreateTodo } from "./create-todo";
 export async function Todos() {
   const todos = await api.todo.getAll.query();
   const session = await getServerAuthSession();
-  const authorized = session?.user
+  const authorized = session?.user;
   return (
     <div>
       <ul>
@@ -15,9 +15,7 @@ export async function Todos() {
           </li>
         ))}
       </ul>
-      {
-        authorized && <CreateTodo />
-      }
+      {authorized && <CreateTodo />}
     </div>
   );
 }
