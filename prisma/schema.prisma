@@ -21,6 +21,19 @@ model Post {
     createdById String
 
     @@index([name])
+    @@index([createdById])
+}
+
+model Todo {
+    id        Int      @id @default(autoincrement())
+    subject   String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    createdBy   User   @relation(fields: [createdById], references: [id])
+    createdById String
+
+    @@index([createdById])
 }
 
 // Necessary for Next auth
@@ -40,6 +53,7 @@ model Account {
     user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
     @@unique([provider, providerAccountId])
+    @@index([userId])
 }
 
 model Session {
@@ -48,6 +62,8 @@ model Session {
     userId       String
     expires      DateTime
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
 }
 
 model User {
@@ -59,6 +75,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    Todo          Todo[]
 }
 
 model VerificationToken {
